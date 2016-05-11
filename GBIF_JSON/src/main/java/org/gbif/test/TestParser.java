@@ -109,7 +109,7 @@ public class TestParser {
 			 * occurrences that correspond to the filter file
 			 */
 			System.out.println("---------------Download-Key:--------------------");
-			String downloadKey = DownloadOccurrences.getDownloadKey("josef.fritzer", "OGC2016", "/Users/Josef/Documents/Josef/OGC/GBIF/filter.json"); 
+			String downloadKey = DownloadOccurrences.getDownloadKey("XXXXX", "XXXXX", "/Users/Josef/Documents/Josef/OGC/GBIF/filter.json"); 
 			System.out.println("Download-Key to get .zip file: " + downloadKey);
 			
 			//get pretty Json String
