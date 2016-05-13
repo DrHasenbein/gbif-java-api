@@ -13,8 +13,9 @@ import com.google.gson.JsonParser;
 
 public abstract class SpeciesParser {
 	/*
-	 * returns the species as JSON-Object or if the species couldn't have been found
+	 * returns the species as JSON-Object or 
 	 * an empty JsonObject will be returned
+	 * if the species couldn't have been found
 	 * 
 	 * http://www.gbif.org/developer/species --> "Searching Names"
 	 */

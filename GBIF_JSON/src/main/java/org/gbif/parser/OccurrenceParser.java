@@ -24,11 +24,11 @@ public abstract class OccurrenceParser {
 	 * http://www.gbif.org/developer/occurrence --> "Searching"
 	 */
 
-	public static String getOccurrences(String country, String taxonKey) throws MalformedURLException, IOException {
+	public static String getOccurrences(String country, String usageKey) throws MalformedURLException, IOException {
 		String prettyJson = "";
 		if ((country != null && country.isEmpty() == false)
-				&& (taxonKey != null && taxonKey.isEmpty() == false)) {
-			String searchURL = "http://api.gbif.org/v1/occurrence/search?taxonKey=" + taxonKey +"&country=" + country +"&limit=20";
+				&& (usageKey != null && usageKey.isEmpty() == false)) {
+			String searchURL = "http://api.gbif.org/v1/occurrence/search?taxonKey=" + usageKey +"&country=" + country +"&limit=20";
 			JsonParser parser = new JsonParser();
 			String gbifJsonOccurrence = IOUtils.toString(new URL(searchURL).openStream());
 			
@@ -49,11 +49,11 @@ public abstract class OccurrenceParser {
 	 * http://www.gbif.org/developer/occurrence --> "Searching"
 	 */
 	
-	public static int getOccurenceCount(String country, String taxonKey) throws MalformedURLException, IOException{
+	public static int getOccurenceCount(String country, String usageKey) throws MalformedURLException, IOException{
 		int count = 0;
 		if ((country != null && country.isEmpty() == false)
-				&& (taxonKey != null && taxonKey.isEmpty() == false)) {
-			String searchURL = "http://api.gbif.org/v1/occurrence/search?taxonKey=" + taxonKey +"&country=" + country + "&limit=20";
+				&& (usageKey != null && usageKey.isEmpty() == false)) {
+			String searchURL = "http://api.gbif.org/v1/occurrence/search?taxonKey=" + usageKey +"&country=" + country + "&limit=20";
 			JsonParser parser = new JsonParser();
 			String gbifJsonOccurrence = IOUtils.toString(new URL(searchURL).openStream());
 			

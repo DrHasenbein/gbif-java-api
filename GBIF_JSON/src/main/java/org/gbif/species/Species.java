@@ -3,10 +3,12 @@ package org.gbif.species;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.http.ParseException;
 import org.gbif.parser.ChildrenParser;
 import org.gbif.parser.ParentParser;
+import org.gbif.parser.VernacularParser;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -34,7 +36,7 @@ public class Species {
 			JsonArray childrenArray = ChildrenParser.getChildren(getElementValue("usageKey"));
 			if(childrenArray.size() > 0){
 				for(int i = 0; i < childrenArray.size(); i++){
-					children.add(childrenArray.get(i).getAsJsonObject().get("scientificName").getAsString());
+					children.add(childrenArray.get(i).getAsJsonObject().get("canonicalName").getAsString());
 				}
 			}
 		}
@@ -52,7 +54,7 @@ public class Species {
 			JsonArray parentsArray = ParentParser.getParents(getElementValue("usageKey"));
 			if(parentsArray.size() > 0){
 				for(int i = parentsArray.size() -1; i >= 0; i--){
-					parents.add(parentsArray.get(i).getAsJsonObject().get("scientificName").getAsString());
+					parents.add(parentsArray.get(i).getAsJsonObject().get("canonicalName").getAsString());
 				}
 			}
 		}
@@ -76,6 +78,7 @@ public class Species {
 	
 	/*
 	 * returns all elements of an species as ArrayList<String>
+	 * or an empty List if the speciesObject is null.
 	 */
 	public ArrayList<String> getSpeciesElements(){
 		ArrayList<String> speciesElements = new ArrayList<>();
@@ -88,10 +91,28 @@ public class Species {
 				String elementFinal = propertiesRaw.substring(0, indexOfEqual);
 				speciesElements.add(elementFinal);
 			}
-			return speciesElements;
-		}else{
-			return speciesElements;
 		}
+		return speciesElements;
+	}
+	
+	/*
+	 * returns a HashMap that contains vernacular
+	 * key-value pairs, key = language and value = vernacular name
+	 */
+	public HashMap<String, String> getVernacularNames() throws MalformedURLException, IOException{
+		HashMap<String, String> nameMap = new HashMap<>();
+		JsonArray vernacularObjects = VernacularParser.getVernacularNames(getUsageKey());
+		if(vernacularObjects.size() > 0){
+			for(int i = 0; i < vernacularObjects.size(); i++){
+				JsonObject vernacularObject = vernacularObjects.get(i).getAsJsonObject();
+				String keyLanguage = vernacularObject.get("language").getAsString();
+				String name = vernacularObject.get("vernacularName").getAsString();
+				if(name.isEmpty() == false && keyLanguage.isEmpty() == false){
+					nameMap.put(keyLanguage, name);
+				}
+			}
+		}
+		return nameMap;
 	}
 	
 	/*
