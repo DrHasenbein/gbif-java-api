@@ -69,8 +69,11 @@ public class Species {
 	 */
 	public String getParentAtLevel(int level) throws MalformedURLException, IOException{
 		ArrayList<String> parents = getParents();
-		if(level > parents.size()){
+		if(parents.isEmpty()){
 			throw new ParseException("Species is root");
+		}
+		else if(level > parents.size()){
+			throw new ParseException("No parent at: " + level);
 		}else{
 			return parents.get(level-1);
 		}

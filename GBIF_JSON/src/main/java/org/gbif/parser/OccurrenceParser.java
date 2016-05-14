@@ -16,8 +16,8 @@ public abstract class OccurrenceParser {
 
 	/*
 	 * returns a pretty-Json-String which contains all found species-occurrences belongs
-	 * to a country-code and a taxon-key: https://www.iso.org/obp/ui/#search if more than 20
-	 * occurrences has been found the first 20 occurrences will be returned if
+	 * to a country-code and a taxon-key: https://www.iso.org/obp/ui/#search if more than 100
+	 * occurrences has been found the first 100 occurrences will be returned if
 	 * no occurences couldn't have been found, an empty String will be
 	 * returned.
 	 * 
@@ -28,7 +28,7 @@ public abstract class OccurrenceParser {
 		String prettyJson = "";
 		if ((country != null && country.isEmpty() == false)
 				&& (usageKey != null && usageKey.isEmpty() == false)) {
-			String searchURL = "http://api.gbif.org/v1/occurrence/search?taxonKey=" + usageKey +"&country=" + country +"&limit=20";
+			String searchURL = "http://api.gbif.org/v1/occurrence/search?taxonKey=" + usageKey +"&country=" + country +"&limit=100";
 			JsonParser parser = new JsonParser();
 			String gbifJsonOccurrence = IOUtils.toString(new URL(searchURL).openStream());
 			
@@ -53,7 +53,7 @@ public abstract class OccurrenceParser {
 		int count = 0;
 		if ((country != null && country.isEmpty() == false)
 				&& (usageKey != null && usageKey.isEmpty() == false)) {
-			String searchURL = "http://api.gbif.org/v1/occurrence/search?taxonKey=" + usageKey +"&country=" + country + "&limit=20";
+			String searchURL = "http://api.gbif.org/v1/occurrence/search?taxonKey=" + usageKey +"&country=" + country + "&limit=100";
 			JsonParser parser = new JsonParser();
 			String gbifJsonOccurrence = IOUtils.toString(new URL(searchURL).openStream());
 			
